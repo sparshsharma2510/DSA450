@@ -50,4 +50,17 @@ public class linkedlist{
 		//now recur over the remaning list and pass curr node as prev and next as curr
 		return revList(curr,next);
 	}
+
+	/***********Q3. Program for detecting a loop in the linked list*****************/
+	public static boolean detectLoop(Node head){
+        // Add code here
+        Node slow = head, fast = head;
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow)
+                return true;
+        }
+        return false;
+    }
 }
