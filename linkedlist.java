@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ListNode {
+class ListNode {
     int val;
     ListNode next;
     ListNode() {}
@@ -31,7 +31,7 @@ public class linkedlist{
 		}
 
 		return prev;
-		
+
 		//Time Complexity: O(n)
         //Space Complexity: O(1)
 	}
@@ -58,8 +58,8 @@ public class linkedlist{
 	}
 
 	/***********Q3. Program for detecting a loop in the linked list*****************/
-	public static boolean detectLoop(Node head){
-        Node slow = head, fast = head;	//Initialise the slow and the fast pointer
+	public static boolean detectLoop(ListNode head){
+        ListNode slow = head, fast = head;	//Initialise the slow and the fast pointer
         while(fast.next != null && fast.next.next != null){
             slow = slow.next;	//move slow by one node
             fast = fast.next.next;	//move fast by two nodes
