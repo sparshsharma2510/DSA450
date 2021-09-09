@@ -31,11 +31,17 @@ public class linkedlist{
 		}
 
 		return prev;
+		
+		//Time Complexity: O(n)
+        //Space Complexity: O(1)
 	}
 
 	public static ListNode reverseLinkedListRecursively(ListNode head){
 		//Make a call to the recursive function
 		return revList(null, head);
+
+		//Time Complexity: O(n)
+        //Space Complexity: O(n){call stack space will be O(n) as at max, we make 'n' recursive calls}
 	}
 
 	public static ListNode revList(ListNode prev, ListNode curr){
@@ -53,14 +59,22 @@ public class linkedlist{
 
 	/***********Q3. Program for detecting a loop in the linked list*****************/
 	public static boolean detectLoop(Node head){
-        // Add code here
-        Node slow = head, fast = head;
+        Node slow = head, fast = head;	//Initialise the slow and the fast pointer
         while(fast.next != null && fast.next.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
-            if(fast == slow)
+            slow = slow.next;	//move slow by one node
+            fast = fast.next.next;	//move fast by two nodes
+            if(fast == slow){	
+	            //if at any instance, our fast became equal to slow, this means, we can
+	            //gurantee that there must be a loop in the linkedist, as we were moving
+	            //fast by 2 nodes and slow by one and the only way the two pointers could become
+	            //equal was if the list had a loop
                 return true;
+            }
         }
+        //If we reach here, this means that fast never became equal to slow, thus we return false
         return false;
+
+        //Time Complexity: O(n)
+        //Space Complexity: O(1)
     }
 }
