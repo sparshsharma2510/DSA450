@@ -58,6 +58,66 @@ public class linkedlist{
 		//now recur over the remaning list and pass curr node as prev and next as curr
 		return revList(curr,next);
 	}
+    /***********Q2. Reverse Node of the linked list in groups of size k*****************/
+    public static ListNode reverseInGroups(ListNode head, int k){
+        //Firstly, Calculate the original length of the linked list
+        int len = 0;
+        ListNode temp = head;
+        while(temp != null){
+            len++;
+            temp = temp.next;
+        }
+
+        //create a dummy node so as to keep a reference to new head,
+        // as our main head will change after reversing the nodes in groups
+        ListNode dummy = new ListNode(-1);  
+        dummy.next = head;
+
+        // We also need a prev node reference as we need references of prev nodes while reversing
+        //(refer to the reverseListIteratievly code segment)
+        ListNode prev = dummy;
+
+        //Keep iterating while our length is greater than the given group size
+        while(len >= k){
+            ListNode curr = prev.next;  //For each group, our prev pointer's next will point to curr
+            ListNode next = curr.next; 
+
+            // Iteratively work on each group
+            for(int i = 1; i < k; i++){
+                //make curr pointer point to the next's next every time
+                //so by the last iteration, our curr's next will point to the next group's head(original)
+                curr.next = next.next;  
+                //make next's next point to the prev's next
+                //(our prev's next pointer points to the node which was immediately before the next node)
+                next.next = prev.next;
+                //now in the end we set the prev's next to next 
+                prev.next = next;
+                //and we update our next to the curr's next
+                next = curr.next;
+            }
+            //after we are done with the work on the group, we set our prev to curr
+            //as after each group work, curr will become the last node of that particular group
+            prev = curr;
+            //and at last subtract k from length
+            len -= k;
+        }
+
+        if(len == 0)    //if we have exhauted the entire linkedlist length, we return the dummy's next
+            return dummy.next;
+
+        //NOTE: If you are solving this problem on leetcode, then you need not to reverse the remaining list
+        // But for those who are solving it on GFG, you need to reverse the remaining linkedlist using a simple
+        // reversing the list code segment
+        prev.next = reverseLinkedListIteratively(prev.next);
+        return dummy.next;
+
+        //Please NOTE: If you had a hard time understanding this code segment
+        //refer to this video resource: https://www.youtube.com/watch?v=Of0HPkk3JgI
+
+        //TIME: O(n/k)*O(k) = O(n)
+        //SPACE: O(1)
+    }
+
 
 	/***********Q3. Program for detecting a loop in the linked list*****************/
 	public static boolean detectLoop(ListNode head){
@@ -123,7 +183,7 @@ public class linkedlist{
     /***********Q5. Program for finding the start of a loop in the linked list*****************/
     public static ListNode findStartNode(ListNode head){
     	ListNode slow = head, fast = head;
-
+        ListNode prev = slow;
     	while(fast.next != null && fast.next.next != null){	//iterate over the list till over fast pointer reaches the end or becomes equal to slow
             prev = slow;	//keep a track of prev node reference of slow
             slow = slow.next;
@@ -136,7 +196,7 @@ public class linkedlist{
         //Refer to this youtube link
         //https://www.youtube.com/watch?v=-YiQZi3mLq0
         if(fast != slow)
-            return;
+            return null;
         return slow;
 
         //Time Complexity : O(N)
