@@ -11,7 +11,6 @@ class ListNode {
 public class linkedlist{
 	public static void main(String[] args) {
 		//DSA 450 Sheet Link: https://drive.google.com/file/d/1FMdN_OCfOI0iAeDlqswCiC2DZzD4nPsb/view
-		//This Solution Set is provided by Sparsh Sharma, GitHub: https://github.com/sparshsharma2510
 		//If you find this useful in any way, Don't forget to star this repository
 		//Also, if you find any errors/bugs, try rasing an issue and feel free to contribute
 	}
@@ -201,5 +200,59 @@ public class linkedlist{
 
         //Time Complexity : O(N)
         //Space Complexity: O(1)
+    }
+
+    /***********Q6. Program for Remove Duplicates in a sorted Linked List*****************/
+    public static ListNode removeDuplicatesFromSortedLL(ListNode head){
+        ListNode temp = head;
+        while(temp != null){
+            //Create a ptr which will keep moving until a new number is encountered
+            ListNode dupPtr = temp.next;
+            while(dupPtr != null && dupPtr.val == temp.val)
+                dupPtr = dupPtr.next;
+            // After the iteration is over, we set our temp's next pointer to dupPtr
+            //which will be either null or will be pointing to a new number
+            temp.next = dupPtr;
+            temp = temp.next;
+        }
+        return head;
+        //Please Note: It is highly advised that you should not distort the given input
+        //untill and unless you are asked to do so.
+        //You could create a separate linkedlist whose head you can return as your answer
+
+        //Time Complexity : O(N)
+        //Space Complexity: O(1)
+    }
+
+    /***********Q6. Program for Remove Duplicates in a unsorted Linked List*****************/
+    public static ListNode removeDuplicatesFromUnSortedLL(ListNode head){
+        //This question is similar to the previous one. But here the list is not sorted
+        //Thus, we need to maintain some sort of a visited element space so that we are 
+        //aware when we encounter a duplicate. Here, since we need fast accessing and we
+        //do not want to store duplicates, A hashset seems the best fit for storing visited elem
+
+        Set<Integer> visited = new HashSet<>();
+        ListNode temp = head;
+        visited.add(temp.val);
+        while(temp != null){
+            //Create a ptr which will keep moving until a new number is encountered
+            ListNode dupPtr = temp.next;
+            while(dupPtr != null && visited.contains(dupPtr.val))
+                dupPtr = dupPtr.next;
+            // After the iteration is over, we set our temp's next pointer to dupPtr
+            //which will be either null or will be pointing to a new number
+            temp.next = dupPtr;
+            temp = temp.next;
+            if(temp != null)
+                visited.add(temp.val);
+        }
+
+        return head;
+        //Please Note: It is highly advised that you should not distort the given input
+        //until and unless you are asked to do so.
+        //You could create a separate linkedlist whose head you can return as your answer
+
+        //Time Complexity : O(N)
+        //Space Complexity: O(N)
     }
 }
